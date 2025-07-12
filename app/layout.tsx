@@ -1,16 +1,12 @@
 import type { Metadata } from "next";
-import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
-
-const geistSans = Geist({
-  variable: "--font-geist-sans",
-  subsets: ["latin"],
-});
-
-const geistMono = Geist_Mono({
-  variable: "--font-geist-mono",
-  subsets: ["latin"],
-});
+import NextAuthSessionProviders from "@/providers/NextAuthSessionProviders";
+import { ThemeProvider } from "@/providers/ThemeProvider";
+import { Toaster } from "sonner";
+import { cn } from "@/lib/utils";
+import Main from "@/components/Main";
+import Footer from "@/components/Footer";
+import NavBar from "@/components/NavBar";
 
 export const metadata: Metadata = {
   title: "Create Next App",
@@ -23,11 +19,26 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en">
-      <body
-        className={`${geistSans.variable} ${geistMono.variable} antialiased`}
-      >
-        {children}
+    <html lang="en" suppressHydrationWarning>
+      <body className={cn("h-dvh w-full overflow-hidden")}>
+        <NextAuthSessionProviders>
+          <ThemeProvider>
+            <Main
+              id="main"
+              className={cn(
+                `main grid grid-rows-[auto_1fr_auto]`,
+                `h-dvh max-h-dvh w-full overflow-y-auto`
+              )}
+            >
+              <NavBar />
+              <div className={"flex flex-col py-2 px-2 md:px-10"}>
+                {children}
+              </div>
+              <Footer />
+            </Main>
+            <Toaster />
+          </ThemeProvider>
+        </NextAuthSessionProviders>
       </body>
     </html>
   );
