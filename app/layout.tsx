@@ -36,7 +36,7 @@ export default function RootLayout({
               </div>
               <Footer />
             </Main>
-            <Toaster />
+            <Toaster richColors={true} />
           </ThemeProvider>
         </NextAuthSessionProviders>
       </body>

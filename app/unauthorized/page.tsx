@@ -1,11 +1,4 @@
-import {
-  HomeIcon,
-  LogInIcon,
-  UserPlusIcon,
-  UserRoundXIcon,
-} from "lucide-react";
-import Link from "next/link";
-import { Button } from "@/components/ui/button";
+import { UserRoundXIcon } from "lucide-react";
 import GoogleButton from "@/components/GoogleButton";
 
 export default async function UnauthorizedPage() {

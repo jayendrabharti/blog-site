@@ -1,6 +1,6 @@
 import Link from "next/link";
 import { Button } from "@/components/ui/button";
-import { BanIcon, HomeIcon, LayoutDashboardIcon } from "lucide-react";
+import { BanIcon, HomeIcon } from "lucide-react";
 
 export default async function NotFound() {
   return (

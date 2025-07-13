@@ -1,10 +1,4 @@
-import { AtSign, PhoneIcon } from "lucide-react";
-import {
-  HomeIcon,
-  InfoIcon,
-  PencilRulerIcon,
-  ScrollTextIcon,
-} from "lucide-react";
+import { AtSign, HomeIcon, ScrollTextIcon, UsersIcon } from "lucide-react";
 import {
   BsFacebook,
   BsGithub,
@@ -15,13 +9,12 @@ import {
 import { anurati } from "@/utils/fonts";
 import { cn } from "@/lib/utils";
 import Link from "next/link";
+import { appName } from "@/utils/data";
 
 export const QuickLinksList = [
   { name: "Home", href: "/", icon: HomeIcon },
-  { name: "About", href: "/aboutme", icon: InfoIcon },
-  { name: "Projects", href: "/projects", icon: PencilRulerIcon },
-  { name: "Blogs", href: "/blogs", icon: ScrollTextIcon },
-  { name: "Contact Me", href: "/contact", icon: PhoneIcon },
+  { name: "People", href: "/profiles", icon: UsersIcon },
+  { name: "Posts", href: "/posts", icon: ScrollTextIcon },
 ];
 
 const SocialsLinkList = [
@@ -58,7 +51,7 @@ export default async function Footer() {
               href="/"
               className={cn(`flex items-center text-6xl`, anurati.className)}
             >
-              EVENTZ
+              {appName.toUpperCase()}
             </Link>
           </div>
 

@@ -2,15 +2,7 @@
 
 import { cn } from "@/lib/utils";
 import { anurati } from "@/utils/fonts";
-import {
-  CalendarCheck2Icon,
-  HomeIcon,
-  InfoIcon,
-  Menu,
-  ScrollTextIcon,
-  UsersIcon,
-  X,
-} from "lucide-react";
+import { HomeIcon, Menu, ScrollTextIcon, UsersIcon, X } from "lucide-react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import ThemeSwitch from "./ThemeSwitch";
@@ -18,8 +10,13 @@ import { useState } from "react";
 import UserButton from "./UserButton";
 import { Button } from "./ui/button";
 import Reveal from "./animations/Reveal";
+import { appName } from "@/utils/data";
 
-export const NavBarLinks = [{ name: "Home", href: "/", icon: HomeIcon }];
+export const NavBarLinks = [
+  { name: "Home", href: "/", icon: HomeIcon },
+  { name: "People", href: "/profiles", icon: UsersIcon },
+  { name: "Posts", href: "/posts", icon: ScrollTextIcon },
+];
 
 export default function NavBar() {
   const pathname = usePathname();
@@ -47,13 +44,13 @@ export default function NavBar() {
           prefetch={true}
           className={cn(anurati.className, "text-2xl font-bold cursor-pointer")}
         >
-          EVENTZ
+          {appName.toUpperCase()}
         </Link>
 
         <div
           className={cn(
             `flex flex-col md:flex-row`,
-            `items-start md:items-center justify-end`,
+            `items-start md:items-center `,
             `gap-3 md:gap-1.5`,
             `top-full w-full left-0`,
             "py-4 px-5 md:p-0",
@@ -92,8 +89,6 @@ export default function NavBar() {
               </Link>
             );
           })}
-
-          {/* <ThemeSwitch className={"ml-auto md:ml-0"} /> */}
         </div>
 
         <ThemeSwitch className={"ml-auto md:ml-0"} />

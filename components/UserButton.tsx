@@ -10,7 +10,7 @@ import {
 import Link from "next/link";
 import SignOutButton from "./SignOutButton";
 import { Button } from "./ui/button";
-import { Loader2Icon, UserRoundCogIcon } from "lucide-react";
+import { Loader2Icon, StickyNoteIcon, UserRoundCogIcon } from "lucide-react";
 import { useSession } from "next-auth/react";
 import { User } from "@prisma/client";
 import GoogleButton from "./GoogleButton";
@@ -70,7 +70,17 @@ const UserButton: React.FC<UserButtonProps> = ({ className }) => {
                 </Button>
               </Link>
 
-              <SignOutButton className="mx-auto w-full flex items-center justify-start" />
+              <Link href="/my_posts" prefetch={true}>
+                <Button
+                  variant={"outline"}
+                  className="mx-auto w-full flex items-center justify-start"
+                >
+                  <StickyNoteIcon />
+                  My Posts
+                </Button>
+              </Link>
+
+              <SignOutButton className="mx-auto w-full flex items-center justify-start text-red-600 bg-red-100 dark:text-red-100 dark:bg-red-600" />
             </div>
           </DropdownMenuContent>
         </DropdownMenu>
