@@ -156,10 +156,20 @@ export async function updateComment(commentId: string, newContent: string) {
 
   const comment = await prisma.comment.findUnique({
     where: { id: commentId },
-    include: { post: true },
+    include: {
+      post: {
+        include: {
+          author: true,
+        },
+      },
+    },
   });
 
-  if (!comment || comment.authorEmail !== session.user.email) {
+  if (
+    !comment ||
+    (comment.post.authorEmail !== session.user.email &&
+      comment.authorEmail !== session.user.email)
+  ) {
     throw new Error("Comment not found or unauthorized");
   }
 
