@@ -113,7 +113,7 @@ export async function postComment({
     },
   });
 
-  revalidatePath(`/posts/${postId}`);
+  revalidatePath(`/`, "layout");
 
   return comment;
 }
@@ -132,8 +132,10 @@ export async function deleteComment(commentId: string) {
 
   if (
     !comment ||
-    comment.authorEmail !== session.user.email ||
-    comment.post.authorEmail !== session.user.email
+    !(
+      comment.post.authorEmail == session.user.email ||
+      comment.authorEmail == session.user.email
+    )
   ) {
     throw new Error("Comment not found or unauthorized");
   }
@@ -142,7 +144,7 @@ export async function deleteComment(commentId: string) {
     where: { id: commentId },
   });
 
-  revalidatePath(`/posts/${comment.postId}`);
+  revalidatePath(`/`, "layout");
 
   return { message: "Comment deleted successfully" };
 }
@@ -180,7 +182,7 @@ export async function updateComment(commentId: string, newContent: string) {
     data: { content: newContent },
   });
 
-  revalidatePath(`/posts/${comment.postId}`);
+  revalidatePath(`/`, "layout");
 
   return { message: "Comment updated successfully" };
 }

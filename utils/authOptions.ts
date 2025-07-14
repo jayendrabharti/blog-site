@@ -51,7 +51,7 @@ export const authOptions: NextAuthOptions = {
               image: profile.picture ?? "",
             },
           });
-          revalidatePath("/profiles");
+          revalidatePath("/", "layout");
           if (!userData) throw "User not created !!";
         }
         return true;

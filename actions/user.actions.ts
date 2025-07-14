@@ -13,6 +13,6 @@ export const updateName = async (newName: string) => {
     data: { name: newName },
   });
 
-  revalidatePath(`/account_settings`);
+  revalidatePath(`/`, "layout");
   return { message: "Name updated successfully !!" };
 };
