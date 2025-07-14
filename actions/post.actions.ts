@@ -167,8 +167,10 @@ export async function updateComment(commentId: string, newContent: string) {
 
   if (
     !comment ||
-    (comment.post.authorEmail !== session.user.email &&
-      comment.authorEmail !== session.user.email)
+    !(
+      comment.post.authorEmail == session.user.email ||
+      comment.authorEmail == session.user.email
+    )
   ) {
     throw new Error("Comment not found or unauthorized");
   }

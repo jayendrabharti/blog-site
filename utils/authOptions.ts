@@ -1,6 +1,7 @@
 import GoogleProvider from "next-auth/providers/google";
 import prisma from "@/prisma/client";
 import type { NextAuthOptions } from "next-auth";
+import { revalidatePath } from "next/cache";
 
 declare module "next-auth" {
   interface Profile {
@@ -50,6 +51,7 @@ export const authOptions: NextAuthOptions = {
               image: profile.picture ?? "",
             },
           });
+          revalidatePath("/profiles");
           if (!userData) throw "User not created !!";
         }
         return true;
