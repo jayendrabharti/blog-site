@@ -90,7 +90,7 @@ export default function NewPostPage() {
             <u>Note:</u>
           </b>{" "}
           You can apply formatting using markdown syntax. To know more about
-          markdown syntax, you can refer to the{" "}
+          markdown syntax, you can refer to the
           <Link
             href="https://www.markdownguide.org/basic-syntax/"
             target="_blank"
@@ -98,6 +98,17 @@ export default function NewPostPage() {
           >
             <Button variant="link" className="text-blue-500">
               Markdown Guide
+              <ExternalLinkIcon />
+            </Button>
+          </Link>
+          or you can use the online markdown editor for better experience
+          <Link
+            href="https://stackedit.io/"
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            <Button variant="link" className="text-blue-500">
+              StackEdit
               <ExternalLinkIcon />
             </Button>
           </Link>
