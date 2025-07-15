@@ -4,8 +4,15 @@ import RevealHero from "@/components/animations/RevealHero";
 import BackButton from "@/components/BackButton";
 import { Button } from "@/components/ui/button";
 import { Textarea } from "@/components/ui/textarea";
+import Markdown from "@/utils/markdown";
 import { Post } from "@prisma/client";
-import { LoaderCircleIcon, PencilIcon } from "lucide-react";
+import {
+  ArrowBigDownIcon,
+  ExternalLinkIcon,
+  LoaderCircleIcon,
+  PencilIcon,
+} from "lucide-react";
+import Link from "next/link";
 import { notFound, useParams, useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
@@ -17,15 +24,21 @@ type PostFormValues = {
 };
 
 export default function UpdatePostPage() {
+  const router = useRouter();
   const { postId } = useParams<{ postId: string }>();
   const [loading, setLoading] = useState<boolean>(true);
   const [post, setPost] = useState<Post | null>(null);
 
-  const router = useRouter();
-
   const form = useForm<PostFormValues>({
     defaultValues: { title: post?.title || "", content: post?.content || "" },
   });
+
+  const scrollToPreview = () => {
+    const previewSection = document.querySelector("#preview");
+    if (previewSection) {
+      previewSection.scrollIntoView({ behavior: "smooth" });
+    }
+  };
 
   useEffect(() => {
     const getPost = async () => {
@@ -104,7 +117,44 @@ export default function UpdatePostPage() {
           )}
           Update Post
         </Button>
+        <Button type={"button"} variant={"secondary"} onClick={scrollToPreview}>
+          Preview
+          <ArrowBigDownIcon />
+        </Button>
       </form>
+
+      <div className="flex flex-col gap-2 mt-6">
+        <div className="text-balance text-center border border-border bg-secondary shadow-md rounded-2xl py-2 w-max max-w-full mx-auto">
+          <b>
+            <u>Note:</u>
+          </b>{" "}
+          You can apply formatting using markdown syntax. To know more about
+          markdown syntax, you can refer to the{" "}
+          <Link
+            href="https://www.markdownguide.org/basic-syntax/"
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            <Button variant="link" className="text-blue-500">
+              Markdown Guide
+              <ExternalLinkIcon />
+            </Button>
+          </Link>
+        </div>
+        <div
+          id="preview"
+          className="prose prose-invert dark:prose-invert max-w-full overflow-x-auto border border-border shadow-md rounded-2xl"
+        >
+          <p className="py-2 px-4 bg-muted font-extrabold text-2xl border-b border-border">
+            Preview
+          </p>
+          <div className="px-5">
+            <Markdown
+              content={form.watch("content") || `# No Content to display`}
+            />
+          </div>
+        </div>
+      </div>
     </section>
   );
 }
