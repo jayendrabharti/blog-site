@@ -30,59 +30,75 @@ export default function PostCard({
 
   return (
     <Reveal>
-      <Card>
-        <CardContent className="flex flex-col gap-2">
-          <div className="flex flex-row items-center justify-between">
-            <span className="text-3xl font-bold text-foreground">
-              {post.title}
-            </span>
-
-            <div className="flex items-center space-x-2 ml-auto">
-              {!open && (
-                <Link href={`/posts/${post.id}`}>
-                  <Button>
-                    View Post <ExternalLink />
+      <Card
+        className={cn(
+          "w-full max-w-full",
+          "sm:max-w-lg md:max-w-xl lg:max-w-2xl xl:max-w-3xl",
+          "mx-auto overflow-hidden"
+        )}
+      >
+        <CardContent className="flex flex-col gap-2 p-4">
+          <div className="flex flex-wrap items-center space-x-2 ml-auto">
+            {!open && (
+              <Link href={`/posts/${post.id}`}>
+                <Button size="sm">
+                  View Post <ExternalLink className="ml-1 size-4" />
+                </Button>
+              </Link>
+            )}
+            {isAuthor && (
+              <>
+                <Link href={`/posts/${post.id}/update`}>
+                  <Button variant="outline" size="icon" className="size-8">
+                    <PencilIcon className="size-4" />
                   </Button>
                 </Link>
+                <DeletePostButton postId={post.id} />
+              </>
+            )}
+          </div>
+          <div className="flex flex-row items-center justify-between">
+            <span
+              className={cn(
+                "font-bold text-foreground break-words",
+                "text-xl sm:text-2xl md:text-3xl"
               )}
-              {isAuthor && (
-                <>
-                  <Link href={`/posts/${post.id}/update`}>
-                    <Button variant="outline" size="icon">
-                      <PencilIcon />
-                    </Button>
-                  </Link>
-                  <DeletePostButton postId={post.id} />
-                </>
-              )}
-            </div>
+              style={{ wordBreak: "break-word" }}
+            >
+              {post.title}
+            </span>
           </div>
           <div
             className={cn(
-              "text-muted-foreground prose prose prose-invert dark:prose-invert"
+              "text-muted-foreground prose prose-invert dark:prose-invert",
+              "max-w-full overflow-x-auto",
+              "text-sm sm:text-base"
             )}
+            style={{ wordBreak: "break-word" }}
           >
             <Markdown content={post.content} />
           </div>
         </CardContent>
-        <CardFooter>
+        <CardFooter className="flex flex-col sm:flex-row items-center justify-between gap-2 p-4">
           <Link
             href={`/profiles/${post.author.id}`}
             className={cn(
-              "group flex items-center gap-3 ml-auto  p-2 pr-4",
+              "group flex items-center gap-3 ml-auto p-2 pr-4",
               "hover:bg-secondary hover:ring-2 ring-muted-foreground",
-              `rounded-full transition-all duration-150`
+              "rounded-full transition-all duration-150",
+              "max-w-full"
             )}
+            style={{ minWidth: 0 }}
           >
-            <Avatar className="size-12">
+            <Avatar className="size-10 sm:size-12">
               <AvatarImage
                 src={post.author.image ?? undefined}
                 alt="user avatar"
               />
               <AvatarFallback>{post.author.name?.charAt(0)}</AvatarFallback>
             </Avatar>
-            <div className="flex flex-col">
-              <span className="text-muted-foreground font-medium">
+            <div className="flex flex-col min-w-0">
+              <span className="text-muted-foreground font-medium truncate">
                 {post.author.name || "Unknown"}
                 {isAuthor && (
                   <Badge className="ml-2" variant="secondary">
@@ -90,14 +106,14 @@ export default function PostCard({
                   </Badge>
                 )}
               </span>
-              <span className="text-xs text-muted-foreground">
+              <span className="text-xs text-muted-foreground truncate">
                 Posted{" "}
                 {timeFormatDistance(new Date(post.createdAt), new Date(), {
                   addSuffix: true,
                 })}
               </span>
             </div>
-            <ExternalLink className="size-0 group-hover:size-8 transition-all duration-150" />
+            <ExternalLink className="size-0 group-hover:size-6 sm:group-hover:size-8 transition-all duration-150" />
           </Link>
         </CardFooter>
       </Card>

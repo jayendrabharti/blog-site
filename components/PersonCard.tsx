@@ -1,6 +1,6 @@
 import { User } from "@prisma/client";
 import { Card, CardContent } from "./ui/card";
-import { Avatar, AvatarFallback, AvatarImage } from "@radix-ui/react-avatar";
+import { Avatar, AvatarFallback, AvatarImage } from "./ui/avatar";
 
 export default function ProfileCard({ profile }: { profile: User }) {
   return (
@@ -16,7 +16,7 @@ export default function ProfileCard({ profile }: { profile: User }) {
             className="rounded-full"
           />
           <AvatarFallback>
-            {profile.name ? profile.name.slice(0, 2) : "NA"}
+            {profile.name ? profile.name.slice(0, 2).toUpperCase() : "NA"}
           </AvatarFallback>
         </Avatar>
         <span className="text-lg font-semibold">{profile.name}</span>

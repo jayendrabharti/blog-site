@@ -153,20 +153,22 @@ export default function CommentItem({
                 <span>Reply</span>
               </Button>
 
-              {hasChildren && (
-                <Button onClick={toggleCollapse} variant={"ghost"}>
-                  <ChevronUpIcon
-                    className={`${
-                      expanded ? "rotate-0" : "rotate-180"
-                    } transition-all duration-200`}
-                  />
-                  <span>
-                    {`${expanded ? "Hide Replies" : "Show Replies"} (${
-                      comment.children.length
-                    })`}
-                  </span>
-                </Button>
-              )}
+              <Button
+                onClick={toggleCollapse}
+                disabled={!hasChildren}
+                variant={"ghost"}
+              >
+                <ChevronUpIcon
+                  className={`${
+                    expanded ? "rotate-0" : "rotate-180"
+                  } transition-all duration-200`}
+                />
+                <span>
+                  {`${expanded ? "Hide Replies" : "Show Replies"} (${
+                    comment.children.length
+                  })`}
+                </span>
+              </Button>
             </div>
           </div>
         </div>

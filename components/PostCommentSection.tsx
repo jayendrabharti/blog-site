@@ -231,15 +231,16 @@ export default function PostCommentSection({ post }: { post: ExtendedPost }) {
   }, []);
 
   return (
-    <div className="flex flex-col gap-4">
-      <div className="flex items-center justify-between">
+    <div className="flex flex-col gap-4 w-full max-w-4xl mx-auto px-2 md:px-4">
+      <div className="flex flex-col md:flex-row items-start md:items-center justify-between gap-2">
         <span className="text-2xl font-bold px-2">
           Comments ({allComments.length})
         </span>
-        <div className="flex gap-2">
+        <div className="flex gap-2 flex-wrap">
           <Button
             variant={showMermaidTree ? "default" : "outline"}
             onClick={() => setShowMermaidTree(!showMermaidTree)}
+            className="min-w-[120px] text-xs md:text-sm"
           >
             Show Comment Tree
           </Button>
@@ -247,28 +248,30 @@ export default function PostCommentSection({ post }: { post: ExtendedPost }) {
             variant={"outline"}
             onClick={collapseAll}
             disabled={!expandedComments.size}
+            className="min-w-[120px] text-xs md:text-sm"
           >
-            <ChevronUpIcon />
+            <ChevronUpIcon className="w-4 h-4 mr-1" />
             Collapse all
           </Button>
         </div>
       </div>
 
-      <div className="">
+      <div className="w-full max-w-2xl mx-auto">
         <Textarea
           placeholder="Add a comment..."
           value={newComment}
           onChange={(e) => setNewComment(e.target.value)}
+          className="w-full min-h-[80px] md:min-h-[100px] resize-none"
         />
         <Button
           disabled={!newComment.trim() || postingComment}
-          className="mt-2 ml-auto flex"
+          className="mt-2 ml-auto flex text-xs md:text-sm"
           onClick={handlePostComment}
         >
           {postingComment ? (
-            <LoaderCircleIcon className="animate-spin" />
+            <LoaderCircleIcon className="animate-spin w-4 h-4 mr-1" />
           ) : (
-            <SendIcon />
+            <SendIcon className="w-4 h-4 mr-1" />
           )}
           {postingComment ? "Posting..." : "Post Comment"}
         </Button>
@@ -283,30 +286,33 @@ export default function PostCommentSection({ post }: { post: ExtendedPost }) {
             animate={{ opacity: 1, scale: 1 }}
             exit={{ opacity: 0, scale: 0.5 }}
             transition={{ duration: 0.1 }}
-            className="fixed inset-0 z-100 bg-black/30 bg-opacity-50 flex items-center justify-center p-4"
+            className="fixed inset-0 z-100 bg-black/30 bg-opacity-50 flex items-center justify-center p-2 md:p-8"
           >
-            <div className="bg-background rounded-lg p-4 border border-border w-full h-full">
+            <div className="bg-background rounded-lg p-2 md:p-4 border border-border w-full max-w-[95vw] max-h-[95vh] overflow-auto">
               <div className="flex items-center justify-between mb-2">
-                <span className="text-2xl font-bold">Comment Tree Diagram</span>
+                <span className="text-lg md:text-2xl font-bold">
+                  Comment Tree Diagram
+                </span>
                 <Button
                   variant={"destructive"}
-                  className="ml-auto"
+                  className="ml-auto text-xs md:text-sm"
                   onClick={() => setShowMermaidTree(false)}
                 >
                   Close
-                  <XIcon />
+                  <XIcon className="w-4 h-4 ml-1" />
                 </Button>
               </div>
               <Separator />
               <div
                 ref={treeRef}
-                className="mermaid-container overflow-x-auto flex flex-col items-center justify-center w-full h-full"
+                className="mermaid-container overflow-x-auto overflow-y-auto flex flex-col items-center justify-center w-full max-w-full max-h-[70vh] md:max-h-[80vh]"
+                style={{ minWidth: "300px" }}
               />
             </div>
           </motion.div>
         )}
       </AnimatePresence>
-      <div className="flex flex-col gap-4">
+      <div className="flex flex-col gap-4 w-full max-w-2xl mx-auto">
         <AnimatePresence>
           {comments.map((comment: CommentWithChildren) => {
             const hasChildren = comment.children && comment.children.length > 0;
