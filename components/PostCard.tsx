@@ -37,49 +37,45 @@ export default function PostCard({
           "mx-auto overflow-hidden"
         )}
       >
-        <CardContent className="flex flex-col gap-2 p-4">
+        <CardContent className="flex flex-col">
           <div className="flex flex-wrap items-center space-x-2 ml-auto">
             {!open && (
               <Link href={`/posts/${post.id}`}>
                 <Button size="sm">
-                  View Post <ExternalLink className="ml-1 size-4" />
+                  View Post <ExternalLink />
                 </Button>
               </Link>
             )}
             {isAuthor && (
               <>
                 <Link href={`/posts/${post.id}/update`}>
-                  <Button variant="outline" size="icon" className="size-8">
-                    <PencilIcon className="size-4" />
+                  <Button variant="outline" size="icon">
+                    <PencilIcon />
                   </Button>
                 </Link>
                 <DeletePostButton postId={post.id} />
               </>
             )}
           </div>
-          <div className="flex flex-row items-center justify-between">
-            <span
-              className={cn(
-                "font-bold text-foreground break-words",
-                "text-xl sm:text-2xl md:text-3xl"
-              )}
-              style={{ wordBreak: "break-word" }}
-            >
-              {post.title}
-            </span>
-          </div>
+          <span
+            className={cn(
+              "font-bold text-foreground break-words",
+              "text-lg sm:text-xl md:text-2xl break-words"
+            )}
+          >
+            {post.title}
+          </span>
           <div
             className={cn(
               "text-muted-foreground prose prose-invert dark:prose-invert",
               "max-w-full overflow-x-auto",
-              "text-sm sm:text-base"
+              "text-sm sm:text-base break-words"
             )}
-            style={{ wordBreak: "break-word" }}
           >
             <Markdown content={post.content} />
           </div>
         </CardContent>
-        <CardFooter className="flex flex-col sm:flex-row items-center justify-between gap-2 p-4">
+        <CardFooter className="flex flex-col sm:flex-row items-center justify-between">
           <Link
             href={`/profiles/${post.author.id}`}
             className={cn(
